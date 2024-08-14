@@ -2,8 +2,9 @@
 
 import { useTheme } from "next-themes"
 import {Sun , Moon} from 'lucide-react'
-import { Button } from "./ui/button"
+
 import { useEffect, useState } from "react"
+import { Switch } from "@/components/ui/switch"
 
 const ToggleMode = () => {
 
@@ -20,10 +21,15 @@ const ToggleMode = () => {
     const isDark = theme === 'dark'
 
   return (
-        <Button variant={"outline"} onClick={() => setTheme(`${isDark ? 'light' : 'dark'}`)}>
+        <Switch onClick={() => setTheme(`${isDark ? 'light' : 'dark'}`)}>
           {theme === 'dark'? <Sun /> : <Moon />}
-        </Button>
+        </Switch>
   )
 }
 
 export default ToggleMode
+
+
+
+
+
