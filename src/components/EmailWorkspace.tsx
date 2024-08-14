@@ -9,6 +9,9 @@ import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { Separator } from "./ui/separator"
 import Image from "next/image"
+import Reply from "./Reply"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 
 type Props = {}
@@ -17,6 +20,27 @@ const EmailWorkspace = (props: Props) => {
 
     const { theme } = useTheme()
     const token = localStorage.getItem("token")
+    const [emails, setEmails] = useState([])
+
+    useEffect(() => {
+      
+        const getEmails = async() => {
+            try {
+                    const response = await axios.get("https://hiring.reachinbox.xyz/api/v1/onebox/list", {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    console.log(response.data);
+                    setEmails(response.data.data);
+                    
+                 
+                } catch (error) {
+                    console.error("Error fetching emails:", error);
+                }
+        }
+        getEmails()
+    }, [token])
 
     return (
         <div className="grid grid-cols-12 w-full h-full" >
@@ -52,9 +76,9 @@ const EmailWorkspace = (props: Props) => {
                         </div>
                     </div>
                 </div>
-                <AllEmails token={token} />
+                <AllEmails token={token} emails={emails} />
             </div>
-            <div className="col-span-6  ">
+            <div className=" relative col-span-6  ">
                 <div className="flex justify-between items-center p-2" >
                     <div className="flex flex-col p-2 gap-1">
                         <h2 className="text-md font-semibold" >Orlando</h2>
@@ -73,7 +97,13 @@ const EmailWorkspace = (props: Props) => {
                         </div>
                     </div>
                 </div>
-                <Separator/>
+                <Reply />
+                <Separator />
+                {/* <div className=" flex mt-5 justify-center items-center" >
+                    <Separator/>
+                    <span className="bg-gray-800 text-xs text-muted-foreground p-2" >Today</span>
+                    <Separator/>
+                </div> */}
             </div>
             <div className="col-span-3 p-3  border-l border-gray-800 ">
                 <div className="bg-gray-800 rounded-md p-2" >

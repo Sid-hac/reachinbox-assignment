@@ -5,18 +5,30 @@ import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 
 
-type Props = {}
+type Props = {
+    email : any
+}
 
 const MailCard = (props: Props) => {
 
     const { theme} = useTheme()
 
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        const options: Intl.DateTimeFormatOptions = {
+            month: 'long', 
+            day: 'numeric', 
+            timeZone: 'UTC', 
+        };
+        return date.toLocaleString('en-US', options); 
+    }
+
   return (
     <div className="p-2 space-y-2">
         <Separator className="mt-3"/>
         <div className="flex justify-between items-center mt-3" >
-            <h2 className="text-lg ">Beata@gmail.com</h2>
-            <span className="text-sm text-muted-foreground" >date</span>
+            <h2 className="text-md ">{props.email.fromEmail}</h2>
+            <span className="text-xs text-muted-foreground" >{formatDate(props.email.sentAt)}</span>
         </div>
         <div>
             <p className="text-sm ">I&apos;ve tried a lot and .</p>
