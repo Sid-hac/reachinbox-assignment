@@ -21,10 +21,13 @@ const EmailWorkspace = (props: Props) => {
     const { theme } = useTheme()
     const token = localStorage.getItem("token")
     const [emails, setEmails] = useState([])
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
       
         const getEmails = async() => {
+
+            setLoading(true); 
             try {
                     const response = await axios.get("https://hiring.reachinbox.xyz/api/v1/onebox/list", {
                         headers: {
@@ -37,6 +40,8 @@ const EmailWorkspace = (props: Props) => {
                  
                 } catch (error) {
                     console.error("Error fetching emails:", error);
+                } finally{
+                    setLoading(false);
                 }
         }
         getEmails()
@@ -76,7 +81,7 @@ const EmailWorkspace = (props: Props) => {
                         </div>
                     </div>
                 </div>
-                <AllEmails token={token} emails={emails} />
+                <AllEmails token={token} emails={emails} loading={loading} />
             </div>
             <div className=" relative col-span-6  ">
                 <div className="flex justify-between items-center p-2" >

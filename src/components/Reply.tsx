@@ -11,7 +11,7 @@ const Reply = (props: Props) => {
     return (
         <div className="absolute bottom-10 left-5" >
             <Popover >
-                <PopoverTrigger className="flex justify-center items-center gap-2 bg-blue-500">
+                <PopoverTrigger className="flex justify-center items-center p-2 rounded-md gap-2 bg-blue-500">
 
                     Reply
 

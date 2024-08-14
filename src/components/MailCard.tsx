@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 
 type Props = {
     email : any
+    onClick: (threadId: string) => void;
 }
 
 const MailCard = (props: Props) => {
@@ -23,15 +24,23 @@ const MailCard = (props: Props) => {
         return date.toLocaleString('en-US', options); 
     }
 
+    const truncateContent = (content: string, maxLength: number) => {
+        return content.length > maxLength ? content.slice(0, maxLength) + "..." : content;
+    }
+
+    const handleClick = () => {
+        props.onClick(props.email.threadId); 
+    }
+
   return (
-    <div className="p-2 space-y-2">
+    <div className="p-2 space-y-2 hover:cursor-pointer" onClick={handleClick}>
         <Separator className="mt-3"/>
         <div className="flex justify-between items-center mt-3" >
-            <h2 className="text-md ">{props.email.fromEmail}</h2>
+            <h2 className="text-md ">{truncateContent(props.email.fromEmail, 15)}</h2>
             <span className="text-xs text-muted-foreground" >{formatDate(props.email.sentAt)}</span>
         </div>
         <div>
-            <p className="text-sm ">I&apos;ve tried a lot and .</p>
+            <p className="text-sm ">{truncateContent(props.email.subject , 30)}</p>
         </div>
         <div className="flex justify-between items-center" >
             <div className={cn("rounded-lg p-1 px-2 flex justify-center items-center gap-1 bg-gray-800 w-fit" , 
