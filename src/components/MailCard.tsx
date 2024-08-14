@@ -2,7 +2,7 @@
 import { Send } from "lucide-react"
 import { Separator } from "./ui/separator"
 import { useTheme } from "next-themes"
-import { cn } from "@/lib/utils"
+import { cn, formatDate, truncateContent } from "@/lib/utils"
 
 
 type Props = {
@@ -14,19 +14,6 @@ const MailCard = (props: Props) => {
 
     const { theme} = useTheme()
 
-    const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        const options: Intl.DateTimeFormatOptions = {
-            month: 'long', 
-            day: 'numeric', 
-            timeZone: 'UTC', 
-        };
-        return date.toLocaleString('en-US', options); 
-    }
-
-    const truncateContent = (content: string, maxLength: number) => {
-        return content.length > maxLength ? content.slice(0, maxLength) + "..." : content;
-    }
 
     const handleClick = () => {
         props.onClick(props.email.threadId); 

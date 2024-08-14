@@ -8,6 +8,7 @@ type Props = {
     token: string | null
     emails: object[]
     loading: boolean
+    onMailCardClick: (threadId: string) => void; 
 }
 
 const AllEmails = (props: Props) => {
@@ -20,7 +21,7 @@ const AllEmails = (props: Props) => {
 
                 (
                     props.emails.map((email, index) => (
-                        <MailCard key={index} email={email}/>
+                        <MailCard key={index} email={email} onClick={props.onMailCardClick}/>
                     ))
                 )
             }

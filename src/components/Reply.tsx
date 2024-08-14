@@ -3,14 +3,37 @@ import { Button } from "./ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { Separator } from "./ui/separator"
 import { Textarea } from "./ui/textarea"
+import { useEffect, useState } from "react"
+import { useTheme } from "next-themes"
+import { cn } from "@/lib/utils"
 
 
 type Props = {}
 
 const Reply = (props: Props) => {
+
+    const [isReplyOpen, setIsReplyOpen] = useState(false);
+    const {theme} = useTheme()
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'R' || event.key === 'r') {
+                setIsReplyOpen(true);
+            }
+        };
+
+        // Attach the event listener
+        document.addEventListener('keydown', handleKeyDown);
+
+        // Cleanup the event listener on component unmount
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
+
     return (
         <div className="absolute bottom-10 left-5" >
-            <Popover >
+            <Popover open={isReplyOpen} onOpenChange={setIsReplyOpen}>
                 <PopoverTrigger className="flex justify-center items-center p-2 rounded-md gap-2 bg-blue-500">
 
                     Reply
@@ -18,9 +41,9 @@ const Reply = (props: Props) => {
                 </PopoverTrigger>
                 <PopoverContent className="rounded-xl" >
                     <div className="rounded-xl" >
-                        <div className="flex justify-between p-2 bg-gray-800 rounded-t-xl ">
+                        <div className={cn("flex justify-between p-2 bg-gray-800 rounded-t-xl ", {"bg-slate-200" : theme === "light" })}>
                             <h2 className="text-sm ">Reply</h2>
-                            <X className="w-5 h-5" />
+                            <X className="w-5 h-5" onClick={() => setIsReplyOpen(false)} />
                         </div>
                         <Separator />
                         <div className="flex justify-start gap-2 p-2 ">
