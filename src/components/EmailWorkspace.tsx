@@ -171,11 +171,10 @@ const EmailWorkspace = (props: Props) => {
                     </div>
                 </div>
                 <Reply
-                    threadId={emails[0]?.threadId}
-                    fromEmail={emails[0]?.fromEmail}
-                    toEmail={emails[0]?.toEmail}
-                    subject={emails[0]?.subject}
-
+                    threadId={emails[0]?.threadId || " "}
+                    fromEmail={emails[0]?.fromEmail || " "}
+                    toEmail={emails[0]?.toEmail || " "}
+                    subject={emails[0]?.subject || " "}
                 />
                 <Separator />
 
